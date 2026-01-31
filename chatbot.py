@@ -44,6 +44,10 @@ def build_prompt(history):
     prompt += "Assistant:"
     return prompt
 
+def save_memory():
+    with open(MEMORY_FILE, "w", encoding= "utf-8") as f:
+        json.dump(chat_history, f, indent=2)
+
 while True:
     try:
         user_input = input("You: ").strip()
@@ -54,6 +58,35 @@ while True:
         if user_input.lower() in ["exit", "quit", "q", "bye"]:
             print("NeoChat: Goodbye 👋")
             break
+
+        if user_input.lower() == "/help":
+            print(
+                "\nNeoChat Commands:\n"
+                "/help   - Show available commands\n"
+                "/clear  - Clear conversation memory\n"
+                "/whoami - Show what NeoChat knows about you\n"
+                "exit    - Quit NeoChat\n"
+            )
+            continue
+
+        if user_input.lower() == "/clear":
+            chat_history.clear()
+            save_memory()
+            print("NeoChat: Memory cleared 🧹\n")
+            continue
+
+        if user_input.lower() == "/whoami":
+            name = None
+            for message in chat_history:
+                if message["role"] == "user":
+                    content = message["content"].lower()
+                    if "my name is" in content:
+                        name = message["content"].split("is",1)[1].strip()
+            if name:
+                print(f"NeoChat: From what I remember, your name is {name}\n")
+            else:
+                print("NeoChat: I don't know your name yet.\n")
+            continue
 
         chat_history.append({"role" : "user", "content" : user_input})
 

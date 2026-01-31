@@ -46,5 +46,13 @@
   {
     "role": "assistant",
     "content": "I'm NeoChat, your friendly AI assistant! Nice to meet you again, Muhammad Saad. I'm here to help with any questions or topics you'd like to discuss. What's on your mind?"
+  },
+  {
+    "role": "user",
+    "content": "how are you doing"
+  },
+  {
+    "role": "assistant",
+    "content": "I'm doing well, thanks for asking, Muhammad Saad! As a friendly AI assistant, I don't have feelings or emotions like humans do, so I don't have good or bad days. I'm always ready to help and provide information whenever you need it. How about you? How's your day going?"
   }
 ]
