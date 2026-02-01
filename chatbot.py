@@ -1,52 +1,23 @@
-import requests
-import json
-import os
-
-OLLAMA_URL = "http://localhost:11434/api/generate"
-MODEL = "llama3" 
-
-SYSTEM_PROMPT = (
-    "You are NeoChat, a friendly and helpful AI assistant.\n"
-    "Rules:\n"
-    "- Always accept user-provided personal information as true.\n"
-    "- Never argue with the user about their name, identity, or preferences.\n"
-    "- If the user tells you their name, remember it and use it.\n"
-    "- Be polite, calm, and non-judgmental.\n"
-    "- Do NOT invent rules, beliefs, or moral lectures.\n"
-    "- If unsure, ask a simple clarification question.\n"
-)
-
+from memory import load_memory, save_memory
+from llm import stream_chat, extract_memory
+from commands import handle_command
+from prompts import SYSTEM_PROMPT
 
 print("🤖 NeoChat — Free Local AI Chatbot")
 print("Type 'exit' to quit\n")
 
-MEMORY_FILE = "memory.json"
+memory = load_memory()
+profile = memory["profile"]
+chat_history = memory["chat_history"]
 
-if os.path.exists(MEMORY_FILE):
-    with open(MEMORY_FILE, "r", encoding="utf-8") as f:
-        chat_history = json.load(f)
-else:
-    chat_history = []
-
-
-def build_prompt(history):
+def build_prompt():
     prompt = SYSTEM_PROMPT + "\nConversation:\n\n"
-
-    for message in history:
+    for message in chat_history:
         role = message["role"]
         content = message["content"]
-
-        if role == "user":
-            prompt += f"You: {content}\n"
-        elif role == "assistant":
-            prompt += f"NeoChat: {content}\n"
-    
+        prompt += f"{role.capitalize()} : {content}\n"
     prompt += "Assistant:"
     return prompt
-
-def save_memory():
-    with open(MEMORY_FILE, "w", encoding= "utf-8") as f:
-        json.dump(chat_history, f, indent=2)
 
 while True:
     try:
@@ -59,69 +30,27 @@ while True:
             print("NeoChat: Goodbye 👋")
             break
 
-        if user_input.lower() == "/help":
-            print(
-                "\nNeoChat Commands:\n"
-                "/help   - Show available commands\n"
-                "/clear  - Clear conversation memory\n"
-                "/whoami - Show what NeoChat knows about you\n"
-                "exit    - Quit NeoChat\n"
-            )
+        if handle_command(user_input.lower(), profile, chat_history):
+            save_memory(profile, chat_history)
             continue
 
-        if user_input.lower() == "/clear":
-            chat_history.clear()
-            save_memory()
-            print("NeoChat: Memory cleared 🧹\n")
-            continue
+        chat_history.append({"role": "user", "content": user_input})
+        
+        extracted = extract_memory(user_input)
+        if extracted:
+            profile.update(extracted)
+            save_memory(profile, chat_history)
 
-        if user_input.lower() == "/whoami":
-            name = None
-            for message in chat_history:
-                if message["role"] == "user":
-                    content = message["content"].lower()
-                    if "my name is" in content:
-                        name = message["content"].split("is",1)[1].strip()
-            if name:
-                print(f"NeoChat: From what I remember, your name is {name}\n")
-            else:
-                print("NeoChat: I don't know your name yet.\n")
-            continue
-
-        chat_history.append({"role" : "user", "content" : user_input})
-
-        full_prompt = build_prompt(chat_history)
-
-        payload = {
-            "model": MODEL,
-            "prompt": full_prompt,
-            "stream": True
-        }
-
-        response = requests.post(
-            OLLAMA_URL,
-            json=payload,
-            stream=True,
-            timeout=300
-        )
-
-        print("NeoChat:", end="", flush=True)
+        print("NeoChat: ", end="", flush=True)
 
         assistant_reply = ""
+        for chunk in stream_chat(build_prompt()):
+            print(chunk, end="", flush=True)
+            assistant_reply += chunk
 
-        for line in response.iter_lines():
-            if line:
-                data = json.loads(line.decode("utf-8"))
-                chunk = data.get("response", "")
-                assistant_reply += chunk
-                print(chunk, end="", flush=True)
-
-                if data.get("done"):
-                    print("\n")
-                    chat_history.append({"role": "assistant", "content": assistant_reply.strip()})
-                    with open(MEMORY_FILE, "w", encoding="utf-8") as f:
-                        json.dump(chat_history, f, indent=2)
-                    break
+        print("\n")
+        chat_history.append({"role": "assistant", "content": assistant_reply})
+        save_memory(profile, chat_history)
 
     except KeyboardInterrupt:
         print("\nNeoChat: Session ended.")

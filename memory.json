@@ -1,58 +1,39 @@
-[
-  {
-    "role": "user",
-    "content": "My name is Muhammad Saad"
+{
+  "profile": {
+    "full_name": "Hamza"
   },
-  {
-    "role": "assistant",
-    "content": "Nice to meet you, Muhammad Saad! I'm NeoChat, your friendly AI assistant. How can I help you today? What's on your mind, and how can I assist you?"
-  },
-  {
-    "role": "user",
-    "content": "What is my name"
-  },
-  {
-    "role": "assistant",
-    "content": "Your name is Muhammad Saad, isn't it? That's what we established earlier."
-  },
-  {
-    "role": "user",
-    "content": "whay is my name"
-  },
-  {
-    "role": "assistant",
-    "content": "Your name is Muhammad Saad!"
-  },
-  {
-    "role": "user",
-    "content": "What is my name"
-  },
-  {
-    "role": "assistant",
-    "content": "Your name is Muhammad Saad!"
-  },
-  {
-    "role": "user",
-    "content": "who am i?"
-  },
-  {
-    "role": "assistant",
-    "content": "You are Muhammad Saad!"
-  },
-  {
-    "role": "user",
-    "content": "who are you"
-  },
-  {
-    "role": "assistant",
-    "content": "I'm NeoChat, your friendly AI assistant! Nice to meet you again, Muhammad Saad. I'm here to help with any questions or topics you'd like to discuss. What's on your mind?"
-  },
-  {
-    "role": "user",
-    "content": "how are you doing"
-  },
-  {
-    "role": "assistant",
-    "content": "I'm doing well, thanks for asking, Muhammad Saad! As a friendly AI assistant, I don't have feelings or emotions like humans do, so I don't have good or bad days. I'm always ready to help and provide information whenever you need it. How about you? How's your day going?"
-  }
-]
+  "chat_history": [
+    {
+      "role": "user",
+      "content": "do you know who i am?"
+    },
+    {
+      "role": "assistant",
+      "content": "I'm just an AI, I don't have personal knowledge of individuals. Each time you interact with me, it's a new conversation and I don't retain any information about our previous conversations or your identity. So, to answer your question, no, I don't know who you are... yet!"
+    },
+    {
+      "role": "user",
+      "content": "I am Muhammad Saad"
+    },
+    {
+      "role": "assistant",
+      "content": "Asalamu alaikum! Nice to meet you, Muhammad Saad! How can I assist you today?"
+    },
+    {
+      "role": "user",
+      "content": "hello how are you"
+    },
+    {
+      "role": "assistant",
+      "content": "Asalamu alaikum, Muhammad Saad! I'm doing well, thank you for asking! It's great to chat with you. Is there something on your mind that you'd like to talk about or ask me? I'm here to listen and help in any way I can."
+    },
+    {
+      "role": "user",
+      "content": "i am Hamza"
+    },
+    {
+      "role": "assistant",
+      "content": "Asalamu alaikum, Hamza! It's great to see you again! You had introduced yourself as Muhammad Saad earlier, but now you're telling me your name is Hamza. Don't worry about the change; I'm here to help and support you regardless of what name you choose to use. What's on your mind today, Hamza? How can I assist you?"
+    }
+  ]
+}
