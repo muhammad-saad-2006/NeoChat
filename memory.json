@@ -34,6 +34,22 @@
     {
       "role": "assistant",
       "content": "Asalamu alaikum, Hamza! It's great to see you again! You had introduced yourself as Muhammad Saad earlier, but now you're telling me your name is Hamza. Don't worry about the change; I'm here to help and support you regardless of what name you choose to use. What's on your mind today, Hamza? How can I assist you?"
+    },
+    {
+      "role": "user",
+      "content": "Hello"
+    },
+    {
+      "role": "assistant",
+      "content": "Asalamu alaikum, Hamza! It's great to see you again! You're welcome to start fresh or pick up where we left off earlier. What's on your mind today, or would you like some help with something specific? I'm here to listen and assist in any way I can."
+    },
+    {
+      "role": "user",
+      "content": "who invented calculus"
+    },
+    {
+      "role": "assistant",
+      "content": "Hamza!\n\nCalculus was independently developed by two mathematicians: Sir Isaac Newton (1642-1727) from England and German mathematician and philosopher Gottfried Wilhelm Leibniz (1646-1716). They both worked on the development of calculus in the late 17th century, but they used different notations and methods. Newton developed the method of \"fluxions\" which are equivalent to modern-day derivatives and integrals, while Leibniz developed the notation that is still widely used today.\n\nNewton's work on calculus was not published until 1687, when his book \"Philosophi\u00e6 Naturalis Principia Mathematica\" was released. Meanwhile, Leibniz published his work in 1684, using the notation of dx and dy for infinitesimal changes in x and y, respectively.\n\nToday, we recognize both Newton and Leibniz as co-developers of calculus, and their contributions are celebrated as a significant milestone in the history of mathematics."
     }
   ]
 }
